@@ -128,5 +128,5 @@ def lambda_handler(event, context):
     clean_up_redundant_volumes()
     return {
         'statusCode': 200,
-        'body': json.dumps('Hello from Lambda!')
+        'body': json.dumps('Executed successfully')
     }
