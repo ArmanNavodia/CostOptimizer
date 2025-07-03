@@ -47,17 +47,17 @@ def clean_up_stale_snapshots():
                 except Exception as e:
                     print(F"Error deleting snapshot {snapshot_id} : {e}")
             elif age in [28,29]:
-                days_left = threshold_days - age_days
-                warn_snapshots.append((snapshot_id, age_days, days_left))
+                days_left = threshold_days - age
+                warn_snapshots.append((snapshot_id, age, days_left))
 
     if warn_snapshots:
         print("\n⏳ Snapshots close to deletion:")
-        for snap_id, age_days, days_left in warn_snapshots:
+        for snap_id, age, days_left in warn_snapshots:
             print(F"Snapshot {snap_id}  will be deleted in {days_left}")
 
     print(F"Total GB saved: {total_GB_saved}")
 
-def clean_up_redundant_vloumes():
+def clean_up_redundant_volumes():
     paginator = client.get_paginator('describe_volumes')
     page_iterator = paginator.paginate()
     threshold_days=30
@@ -125,7 +125,7 @@ def lambda_handler(event, context):
     print("Deleting stale snapshots")
     clean_up_stale_snapshots()
     print("Deleting redundant volumes")
-    clean_up_redundant_vloumes()
+    clean_up_redundant_volumes()
     return {
         'statusCode': 200,
         'body': json.dumps('Hello from Lambda!')

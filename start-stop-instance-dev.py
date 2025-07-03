@@ -21,7 +21,6 @@ def get_instance_ids(tags: dict, instance_state):
     response = client.describe_instances(
         Filters=filter  
     )
-    print(response)
     instance_ids=[]
     for reservation in response['Reservations']:
         for instance in reservation['Instances']:
@@ -69,6 +68,3 @@ def lambda_handler(event, context):
         'statusCode': 200,
         'body': json.dumps('Hello from Lambda!')
     }
-
-
-lambda_handler({"action":"stop"},None)
